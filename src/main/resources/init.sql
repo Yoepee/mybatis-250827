@@ -14,5 +14,8 @@ CREATE TABLE post(
 
 INSERT INTO post(createDate, modifyDate, title, content)
 VALUES
-    (NOW(), NOW(), '제목 1', '내용 1'),
+    (NOW(), NOW(), '제목 1', '내용 1');
+
+INSERT INTO post(createDate, modifyDate, title, content)
+VALUES
     (NOW(), NOW(), '제목 2', '내용 2');

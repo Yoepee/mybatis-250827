@@ -142,14 +142,25 @@ class Mybatis250827ApplicationTests {
     void t11() {
         List<Post> posts = postService.findAll("title", "desc");
         assertThat(posts).hasSize(2);
-        assertThat(posts.get(0).getTitle()).isEqualTo("제목 1");
+        assertThat(posts.get(0).getTitle()).isEqualTo("제목 2");
+        assertThat(posts.get(1).getTitle()).isEqualTo("제목 1");
+    }
+
+    @Test
+    @DisplayName("정렬된 게시물 조회 - 생성일 내림차순")
+    void t12() {
+        postService.create("제목 3", "내용 3");
+        List<Post> posts = postService.findAll("createDate", "desc");
+        assertThat(posts).hasSize(3);
+        assertThat(posts.get(0).getTitle()).isEqualTo("제목 3");
         assertThat(posts.get(1).getTitle()).isEqualTo("제목 2");
+        assertThat(posts.get(2).getTitle()).isEqualTo("제목 1");
     }
 
     @Transactional
     @Test
     @DisplayName("게시물 특정 항목 수정")
-    void t12() {
+    void t13() {
         Post post = postService.findById(1);
         assertThat(post).isNotNull();
 

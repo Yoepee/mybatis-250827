@@ -10,17 +10,17 @@ public interface PostRepository {
     @Select("""
             <script>
             SELECT * FROM post
-            <if test="!orderBy.isEmpty() and orderBy == ''">
+            <if test="!orderBy.isEmpty() and !direction.isEmpty()">
             ORDER BY
                      <choose>
                             <when test="orderBy.equals('title')">
                                 title 
                              </when>
                              <when test="orderBy.equals('createDate')">
-                                createDate 
+                                createdate 
                              </when>
                             <when test="orderBy.equals('modifyDate')">
-                                modifyDate 
+                                modifydate 
                              </when>
                     </choose>
                     <if test="!orderBy.isEmpty() and direction.toUpperCase() == 'DESC'">
@@ -29,7 +29,7 @@ public interface PostRepository {
             </if>
             </script>
             """)
-    List<Post> findAll(@Param("orderBy") String orderBy, @Param("direction")String direction);
+    List<Post> findAll(@Param("orderBy") String orderBy, @Param("direction") String direction);
 
     @Select("""
             <script>
@@ -75,26 +75,26 @@ public interface PostRepository {
     int deleteById(int id);
 
     @Select("""
-        <script>
-                SELECT * FROM post
-                    <where>
-                        <choose>
-                             <when test="type.equals('title')">
-                                title LiKE CONCAT('%', #{keyword}, '%')
-                             </when>
-                             <when test="type.equals('content')">
-                                content LiKE CONCAT('%', #{keyword}, '%')
-                             </when>
-                             <otherwise>
-                                (
-                                    title LiKE CONCAT('%', #{keyword}, '%')
-                                    OR
-                                    content LiKE CONCAT('%', #{keyword}, '%')
-                                )
-                            </otherwise>
-                        </choose>
-                    </where>
-        </script>
-    """)
-    List<Post> findByType(@Param("type")String type,  @Param("keyword")String keyword);
+                <script>
+                        SELECT * FROM post
+                            <where>
+                                <choose>
+                                     <when test="type.equals('title')">
+                                        title LiKE CONCAT('%', #{keyword}, '%')
+                                     </when>
+                                     <when test="type.equals('content')">
+                                        content LiKE CONCAT('%', #{keyword}, '%')
+                                     </when>
+                                     <otherwise>
+                                        (
+                                            title LiKE CONCAT('%', #{keyword}, '%')
+                                            OR
+                                            content LiKE CONCAT('%', #{keyword}, '%')
+                                        )
+                                    </otherwise>
+                                </choose>
+                            </where>
+                </script>
+            """)
+    List<Post> findByType(@Param("type") String type, @Param("keyword") String keyword);
 }
