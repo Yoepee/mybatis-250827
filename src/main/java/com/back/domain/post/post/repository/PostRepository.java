@@ -1,8 +1,7 @@
 package com.back.domain.post.post.repository;
 
 import com.back.domain.post.post.dto.Post;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,4 +21,13 @@ public interface PostRepository {
             </script>
             """)
     Post findById(int id);
+
+    @Insert("""
+            <script>
+            INSERT INTO post(createDate, modifyDate, title, content)
+            VALUES (NOW(), NOW(), #{title}, #{content})
+            </script>
+            """)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int create(Post post);
 }
