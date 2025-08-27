@@ -1,8 +1,4 @@
 spring:
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:init.sql
   profiles:
     active: dev
   output:
