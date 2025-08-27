@@ -88,4 +88,17 @@ class Mybatis250827ApplicationTests {
         assertThat(updatedPost.getTitle()).isEqualTo("제목 3");
         assertThat(updatedPost.getContent()).isEqualTo("내용 3");
     }
+
+    @Test
+    @DisplayName("제목검색")
+    void t7() {
+        List<Post> posts = postService.findAll();
+        assertThat(posts).hasSize(2);
+
+        List<Post> posts1 = postService.search("title", "제목 1");
+        assertThat(posts1).hasSize(1);
+
+        List<Post> posts2 = postService.search("title", "제목");
+        assertThat(posts2).hasSize(2);
+    }
 }

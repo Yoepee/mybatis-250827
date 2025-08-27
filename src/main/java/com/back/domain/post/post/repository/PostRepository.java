@@ -54,4 +54,12 @@ public interface PostRepository {
                 </script>
             """)
     int deleteById(int id);
+
+    @Select("""
+        <script>
+                SELECT * FROM post
+                WHERE ${type} LIKE CONCAT('%', #{keyword}, '%')
+        </script>
+    """)
+    List<Post> findByType(@Param("type")String type,  @Param("keyword")String keyword);
 }
