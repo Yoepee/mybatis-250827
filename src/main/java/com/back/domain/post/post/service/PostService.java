@@ -28,4 +28,15 @@ public class PostService {
     public int getLastInsertId() {
         return postRepository.getLastInsertId();
     }
+
+    public void update(int id, String title, String content) {
+        Post post = findById(id);
+        post.setTitle(title);
+        post.setContent(content);
+        postRepository.update(post);
+    }
+
+    public void deleteById(int id) {
+        postRepository.deleteById(id);
+    }
 }

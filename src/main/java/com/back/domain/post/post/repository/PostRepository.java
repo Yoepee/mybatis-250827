@@ -32,7 +32,26 @@ public interface PostRepository {
     int create(Post post);
 
     @Select("""
-        SELECT LAST_INSERT_ID();
-    """)
+                SELECT LAST_INSERT_ID();
+            """)
     int getLastInsertId();
+
+    @Update("""
+            <script>
+            UPDATE post
+            SET title = #{title},
+                content = #{content},
+                modifyDate = NOW()
+            WHERE id = #{id}
+            </script>
+            """)
+    int update(Post post);
+
+    @Delete("""
+                <script>
+                DELETE FROM post
+                WHERE id = #{id}
+                </script>
+            """)
+    int deleteById(int id);
 }

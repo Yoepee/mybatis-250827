@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ class Mybatis250827ApplicationTests {
         assertThat(post.getContent()).isEqualTo("내용 1");
     }
 
+    @Transactional
     @Test
     @DisplayName("게시물 생성")
     void t3() {
@@ -50,6 +52,7 @@ class Mybatis250827ApplicationTests {
         assertThat(post.getContent()).isEqualTo("내용 3");
     }
 
+    @Transactional
     @Test
     @DisplayName("게시물 생성 V2")
     void t4() {
@@ -60,5 +63,29 @@ class Mybatis250827ApplicationTests {
 
         assertThat(post.getTitle()).isEqualTo("제목 3");
         assertThat(post.getContent()).isEqualTo("내용 3");
+    }
+
+    @Transactional
+    @Test
+    @DisplayName("게시물 삭제")
+    void t5() {
+        postService.deleteById(1);
+        List<Post> posts = postService.findAll();
+
+        assertThat(posts).hasSize(1);
+    }
+
+    @Transactional
+    @Test
+    @DisplayName("게시물 수정")
+    void t6() {
+        Post post = postService.findById(1);
+        assertThat(post).isNotNull();
+        
+        postService.update(1, "제목 3", "내용 3");
+        Post updatedPost = postService.findById(1);
+
+        assertThat(updatedPost.getTitle()).isEqualTo("제목 3");
+        assertThat(updatedPost.getContent()).isEqualTo("내용 3");
     }
 }
