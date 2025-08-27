@@ -56,9 +56,11 @@ public interface PostRepository {
     @Update("""
             <script>
             UPDATE post
-            SET title = #{title},
-                content = #{content},
+            <set>
                 modifyDate = NOW()
+                <if test="!title.isEmpty()">,title = #{title}</if>
+                <if test="!content.isEmpty()">,content = #{content}</if>
+            </set>
             WHERE id = #{id}
             </script>
             """)

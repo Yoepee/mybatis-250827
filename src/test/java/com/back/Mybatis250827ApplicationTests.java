@@ -145,4 +145,18 @@ class Mybatis250827ApplicationTests {
         assertThat(posts.get(0).getTitle()).isEqualTo("제목 1");
         assertThat(posts.get(1).getTitle()).isEqualTo("제목 2");
     }
+
+    @Transactional
+    @Test
+    @DisplayName("게시물 특정 항목 수정")
+    void t12() {
+        Post post = postService.findById(1);
+        assertThat(post).isNotNull();
+
+        postService.update(1, "", "내용 3");
+        Post updatedPost = postService.findById(1);
+
+        assertThat(updatedPost.getTitle()).isEqualTo("제목 1");
+        assertThat(updatedPost.getContent()).isEqualTo("내용 3");
+    }
 }
