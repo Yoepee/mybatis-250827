@@ -29,11 +29,15 @@ public class PostService {
         return postRepository.getLastInsertId();
     }
 
-    public void update(int id, String title, String content) {
+    public int update(int id, String title, String content) {
         Post post = findById(id);
         post.setTitle(title);
         post.setContent(content);
-        postRepository.update(post);
+        int updatedRows = postRepository.update(post);
+        if (updatedRows != 1){
+            throw new IllegalStateException("게시물 수정 실패");
+        }
+        return updatedRows;
     }
 
     public void deleteById(int id) {

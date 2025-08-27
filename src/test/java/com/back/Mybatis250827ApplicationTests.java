@@ -81,7 +81,7 @@ class Mybatis250827ApplicationTests {
     void t6() {
         Post post = postService.findById(1);
         assertThat(post).isNotNull();
-        
+
         postService.update(1, "제목 3", "내용 3");
         Post updatedPost = postService.findById(1);
 
