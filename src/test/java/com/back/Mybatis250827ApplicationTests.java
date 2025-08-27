@@ -114,4 +114,35 @@ class Mybatis250827ApplicationTests {
         List<Post> posts2 = postService.search("content", "내용");
         assertThat(posts2).hasSize(2);
     }
+
+    @Test
+    @DisplayName("내용검색")
+    void t9() {
+        List<Post> posts = postService.findAll();
+        assertThat(posts).hasSize(2);
+
+        List<Post> posts1 = postService.search("", "내용 1");
+        assertThat(posts1).hasSize(1);
+
+        List<Post> posts2 = postService.search("", "제목 1");
+        assertThat(posts2).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("정렬된 게시물 조회 - 제목 오름차순")
+    void t10() {
+        List<Post> posts = postService.findAll("title", "asc");
+        assertThat(posts).hasSize(2);
+        assertThat(posts.get(0).getTitle()).isEqualTo("제목 1");
+        assertThat(posts.get(1).getTitle()).isEqualTo("제목 2");
+    }
+
+    @Test
+    @DisplayName("정렬된 게시물 조회 - 제목 내림차순")
+    void t11() {
+        List<Post> posts = postService.findAll("title", "desc");
+        assertThat(posts).hasSize(2);
+        assertThat(posts.get(0).getTitle()).isEqualTo("제목 1");
+        assertThat(posts.get(1).getTitle()).isEqualTo("제목 2");
+    }
 }
