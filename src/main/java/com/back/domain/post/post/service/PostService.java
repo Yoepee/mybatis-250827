@@ -24,4 +24,8 @@ public class PostService {
         postRepository.create(post);
         return post.getId();
     }
+
+    public int getLastInsertId() {
+        return postRepository.getLastInsertId();
+    }
 }

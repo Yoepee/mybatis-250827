@@ -30,4 +30,9 @@ public interface PostRepository {
             """)
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int create(Post post);
+
+    @Select("""
+        SELECT LAST_INSERT_ID();
+    """)
+    int getLastInsertId();
 }

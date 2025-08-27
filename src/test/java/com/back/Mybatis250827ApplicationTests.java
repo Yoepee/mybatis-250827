@@ -42,7 +42,19 @@ class Mybatis250827ApplicationTests {
     @Test
     @DisplayName("게시물 생성")
     void t3() {
-        int id = postService.create("제목 3", "내용 3");
+        int id =postService.create("제목 3", "내용 3");
+
+        Post post = postService.findById(id);
+
+        assertThat(post.getTitle()).isEqualTo("제목 3");
+        assertThat(post.getContent()).isEqualTo("내용 3");
+    }
+
+    @Test
+    @DisplayName("게시물 생성 V2")
+    void t4() {
+        postService.create("제목 3", "내용 3");
+        int id = postService.getLastInsertId();
 
         Post post = postService.findById(id);
 
