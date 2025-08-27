@@ -58,7 +58,23 @@ public interface PostRepository {
     @Select("""
         <script>
                 SELECT * FROM post
-                WHERE ${type} LIKE '%${keyword}%'
+                    <where>
+                        <choose>
+                             <when test="type == 'title'">
+                                title LiKE CONCAT('%', #{keyword}, '%')
+                             </when>
+                             <when test="type == 'content'">
+                                content LiKE CONCAT('%', #{keyword}, '%')
+                             </when>
+                             <otherwise>
+                                (
+                                    title LiKE CONCAT('%', #{keyword}, '%')
+                                    OR
+                                    content LiKE CONCAT('%', #{keyword}, '%')
+                                )
+                            </otherwise>
+                        </choose>
+                    </where>
         </script>
     """)
     List<Post> findByType(@Param("type")String type,  @Param("keyword")String keyword);
