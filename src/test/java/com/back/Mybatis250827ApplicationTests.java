@@ -101,4 +101,17 @@ class Mybatis250827ApplicationTests {
         List<Post> posts2 = postService.search("title", "제목");
         assertThat(posts2).hasSize(2);
     }
+
+    @Test
+    @DisplayName("내용검색")
+    void t8() {
+        List<Post> posts = postService.findAll();
+        assertThat(posts).hasSize(2);
+
+        List<Post> posts1 = postService.search("content", "내용 1");
+        assertThat(posts1).hasSize(1);
+
+        List<Post> posts2 = postService.search("content", "내용");
+        assertThat(posts2).hasSize(2);
+    }
 }

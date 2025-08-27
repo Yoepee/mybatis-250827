@@ -58,7 +58,7 @@ public interface PostRepository {
     @Select("""
         <script>
                 SELECT * FROM post
-                WHERE ${type} LIKE CONCAT('%', #{keyword}, '%')
+                WHERE ${type} LIKE '%${keyword}%'
         </script>
     """)
     List<Post> findByType(@Param("type")String type,  @Param("keyword")String keyword);
