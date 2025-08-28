@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.back.domain.member.member.repository.MemberRepository">
+    <select id="findAll" resultType="Member">
+        SELECT * FROM member;
+    </select>
+
+    <select id="findById" resultType="Member">
+        SELECT * FROM member
+        WHERE id = #{id};
+    </select>
+
+    <select id="findByUsername" resultType="Member">
+        SELECT * FROM member
+        WHERE username = #{username};
+    </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO member(createDate, modifyDate, username, password, name, email)
+        VALUES (NOW(), NOW(), #{username}, #{password}, #{name}, #{email})
+    </insert>
+
+    <!-- 게시물 생성 V2 -->
+    <insert id="createV2">
+        INSERT INTO member
+        SET createDate = NOW(),
+            modifyDate = NOW(),
+            username = #{username},
+            password = #{password},
+            `name` = #{name},
+            `email` = #{emain}
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM member
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE member
+        <set>
+            modifyDate = NOW(),
+            <if test="!username.isEmpty()">username = #{username},</if>
+            <if test="!password.isEmpty()">password = #{password},</if>
+            <if test="!name.isEmpty()">`name` = #{name},</if>
+            <if test="!email.isEmpty()">`email` = #{email},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

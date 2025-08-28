@@ -6,4 +6,4 @@ spring:
       enabled: always
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
-  type-aliases-package: com.back.domain.post.post.dto
+  type-aliases-package: com.back.domain.**.dto
