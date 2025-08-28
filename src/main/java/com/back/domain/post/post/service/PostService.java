@@ -52,4 +52,8 @@ public class PostService {
     public List<Post> search(String type, String keyword) {
         return postRepository.findByType(type, keyword);
     }
+
+    public int deleteByIds(List<Integer> ids) {
+        return postRepository.deleteByIds(ids);
+    }
 }

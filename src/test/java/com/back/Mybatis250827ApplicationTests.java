@@ -9,12 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 class Mybatis250827ApplicationTests {
     @Autowired
     private PostService postService;
@@ -40,7 +42,6 @@ class Mybatis250827ApplicationTests {
         assertThat(post.getContent()).isEqualTo("내용 1");
     }
 
-    @Transactional
     @Test
     @DisplayName("게시물 생성")
     void t3() {
@@ -52,7 +53,6 @@ class Mybatis250827ApplicationTests {
         assertThat(post.getContent()).isEqualTo("내용 3");
     }
 
-    @Transactional
     @Test
     @DisplayName("게시물 생성 V2")
     void t4() {
@@ -65,7 +65,6 @@ class Mybatis250827ApplicationTests {
         assertThat(post.getContent()).isEqualTo("내용 3");
     }
 
-    @Transactional
     @Test
     @DisplayName("게시물 삭제")
     void t5() {
@@ -75,7 +74,6 @@ class Mybatis250827ApplicationTests {
         assertThat(posts).hasSize(1);
     }
 
-    @Transactional
     @Test
     @DisplayName("게시물 수정")
     void t6() {
@@ -157,7 +155,6 @@ class Mybatis250827ApplicationTests {
         assertThat(posts.get(2).getTitle()).isEqualTo("제목 1");
     }
 
-    @Transactional
     @Test
     @DisplayName("게시물 특정 항목 수정")
     void t13() {
@@ -169,5 +166,21 @@ class Mybatis250827ApplicationTests {
 
         assertThat(updatedPost.getTitle()).isEqualTo("제목 1");
         assertThat(updatedPost.getContent()).isEqualTo("내용 3");
+    }
+
+    @Test
+    @DisplayName("다중 게시물 삭제")
+    void t14() {
+        // 추가 게시물 생성
+        int id3 = postService.create("제목 3", "내용 3");
+        int id4 = postService.create("제목 4", "내용 4");
+
+        // 다중 삭제
+        int deletedCount = postService.deleteByIds(Arrays.asList(id3, id4));
+        assertThat(deletedCount).isEqualTo(2);
+
+        // 삭제 확인
+        List<Post> posts = postService.findAll();
+        assertThat(posts).hasSize(2); // 기존 2개만 남음
     }
 }

@@ -97,4 +97,17 @@ public interface PostRepository {
                 </script>
             """)
     List<Post> findByType(@Param("type") String type, @Param("keyword") String keyword);
+
+    @Delete("""
+                <script>
+                DELETE FROM post
+                <where>
+                     id IN
+                     <foreach collection="ids" item="id" open="(" separator="," close=")">
+                     #{id}
+                     </foreach>
+                </where>
+                </script>
+            """)
+    int deleteByIds(List<Integer> ids);
 }
