@@ -19,3 +19,23 @@ VALUES
 INSERT INTO post(createDate, modifyDate, title, content)
 VALUES
     (NOW(), NOW(), '제목 2', '내용 2');
+
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE `member`(
+                     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                     createDate DATETIME NOT NULL,
+                     modifyDate DATETIME NOT NULL,
+                     username CHAR(100) NOT NULL UNIQUE,
+                     `password` CHAR(100) NOT NULL,
+                     `name` CHAR(100) NOT NULL,
+                     `email` CHAR(100) NOT NULL,
+                     PRIMARY KEY(id)
+);
+
+INSERT INTO `member`(createDate, modifyDate, username, password, name, email)
+VALUES
+    (NOW(), NOW(), 'user1', '{noop}1234', '유저1', 'user1@test.com');
+
+INSERT INTO `member`(createDate, modifyDate, username, password, name, email)
+VALUES
+    (NOW(), NOW(), 'user2', '{noop}1234', '유저2', 'user2@test.com');
