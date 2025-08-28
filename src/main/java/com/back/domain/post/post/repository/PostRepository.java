@@ -57,9 +57,9 @@ public interface PostRepository {
             <script>
             UPDATE post
             <set>
-                modifyDate = NOW()
-                <if test="!title.isEmpty()">,title = #{title}</if>
-                <if test="!content.isEmpty()">,content = #{content}</if>
+                modifyDate = NOW(),
+                <if test="!title.isEmpty()">title = #{title},</if>
+                <if test="!content.isEmpty()">content = #{content},</if>
             </set>
             WHERE id = #{id}
             </script>
