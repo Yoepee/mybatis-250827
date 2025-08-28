@@ -7,107 +7,19 @@ import java.util.List;
 
 @Mapper
 public interface PostRepository {
-    @Select("""
-            <script>
-            SELECT * FROM post
-            <if test="!orderBy.isEmpty() and !direction.isEmpty()">
-            ORDER BY
-                     <choose>
-                            <when test="orderBy.equals('title')">
-                                title 
-                             </when>
-                             <when test="orderBy.equals('createDate')">
-                                createdate 
-                             </when>
-                            <when test="orderBy.equals('modifyDate')">
-                                modifydate 
-                             </when>
-                    </choose>
-                    <if test="!orderBy.isEmpty() and direction.toUpperCase() == 'DESC'">
-                        DESC
-                    </if>
-            </if>
-            </script>
-            """)
     List<Post> findAll(@Param("orderBy") String orderBy, @Param("direction") String direction);
 
-    @Select("""
-            <script>
-            SELECT * FROM post
-            WHERE id = #{id}
-            </script>
-            """)
     Post findById(int id);
 
-    @Insert("""
-            <script>
-            INSERT INTO post(createDate, modifyDate, title, content)
-            VALUES (NOW(), NOW(), #{title}, #{content})
-            </script>
-            """)
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     int create(Post post);
 
-    @Select("""
-                SELECT LAST_INSERT_ID();
-            """)
     int getLastInsertId();
 
-    @Update("""
-            <script>
-            UPDATE post
-            <set>
-                modifyDate = NOW(),
-                <if test="!title.isEmpty()">title = #{title},</if>
-                <if test="!content.isEmpty()">content = #{content},</if>
-            </set>
-            WHERE id = #{id}
-            </script>
-            """)
     int update(Post post);
 
-    @Delete("""
-                <script>
-                DELETE FROM post
-                WHERE id = #{id}
-                </script>
-            """)
     int deleteById(int id);
 
-    @Select("""
-                <script>
-                        SELECT * FROM post
-                            <where>
-                                <choose>
-                                     <when test="type.equals('title')">
-                                        title LiKE CONCAT('%', #{keyword}, '%')
-                                     </when>
-                                     <when test="type.equals('content')">
-                                        content LiKE CONCAT('%', #{keyword}, '%')
-                                     </when>
-                                     <otherwise>
-                                        (
-                                            title LiKE CONCAT('%', #{keyword}, '%')
-                                            OR
-                                            content LiKE CONCAT('%', #{keyword}, '%')
-                                        )
-                                    </otherwise>
-                                </choose>
-                            </where>
-                </script>
-            """)
     List<Post> findByType(@Param("type") String type, @Param("keyword") String keyword);
 
-    @Delete("""
-                <script>
-                DELETE FROM post
-                <where>
-                     id IN
-                     <foreach collection="ids" item="id" open="(" separator="," close=")">
-                     #{id}
-                     </foreach>
-                </where>
-                </script>
-            """)
     int deleteByIds(List<Integer> ids);
 }
