@@ -46,4 +46,12 @@ public class MemberService {
             throw new IllegalStateException("게시물 수정 실패");
         }
     }
+
+    public List<Member> search(String type, String keyword) {
+        return memberRepository.search(type, keyword);
+    }
+
+    public int deleteByIds(List<Integer> ids) {
+        return memberRepository.deleteByIds(ids);
+    }
 }

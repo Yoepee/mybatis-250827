@@ -17,4 +17,8 @@ public interface MemberRepository {
     void deleteById(int id);
 
     int update(Member member);
+
+    List<Member> search(String type, String keyword);
+
+    int deleteByIds(List<Integer> ids);
 }

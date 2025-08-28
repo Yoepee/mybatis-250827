@@ -48,4 +48,40 @@
         </set>
         WHERE id = #{id}
     </update>
+
+    <select id="search" resultType="Member">
+        SELECT * FROM member
+        <where>
+            <choose>
+                <when test="type.equals('username')">
+                    username LiKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type.equals('name')">
+                    `name` LiKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type.equals('email')">
+                    `email` LiKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <otherwise>
+                    (
+                    username LiKE CONCAT('%', #{keyword}, '%')
+                    OR
+                    `name` LiKE CONCAT('%', #{keyword}, '%')
+                    OR
+                    `email` LiKE CONCAT('%', #{keyword}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <delete id="deleteByIds">
+        DELETE FROM member
+        <where>
+            id IN
+               <foreach collection="ids" item="id" open="(" separator="," close=")">
+                   #{id}
+               </foreach>
+        </where>
+    </delete>
 </mapper>
