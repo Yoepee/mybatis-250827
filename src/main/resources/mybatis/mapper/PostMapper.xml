@@ -53,8 +53,8 @@
 
     <!-- 게시물 생성 (ID 반환) -->
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO post(createDate, modifyDate, title, content)
-        VALUES (NOW(), NOW(), #{title}, #{content})
+        INSERT INTO post(createDate, modifyDate, title, content, memberId)
+        VALUES (NOW(), NOW(), #{title}, #{content}, #{memberId})
     </insert>
 
     <!-- 게시물 생성 V2 -->
@@ -63,7 +63,8 @@
         SET createDate = NOW(),
             modifyDate = NOW(),
             title = #{title},
-            content = #{content}
+            content = #{content},
+            memberId = #{memberId}
     </insert>
 
     <!-- 마지막 INSERT ID 조회 -->

@@ -24,8 +24,8 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public int create(String title, String content) {
-        Post post = new Post(title, content);
+    public int create(String title, String content, int memberId) {
+        Post post = new Post(title, content, memberId);
         postRepository.create(post);
         return post.getId();
     }

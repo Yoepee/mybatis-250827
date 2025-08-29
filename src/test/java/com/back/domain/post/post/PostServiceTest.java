@@ -41,7 +41,7 @@ public class PostServiceTest {
     @Test
     @DisplayName("게시물 생성")
     void t3() {
-        int id =postService.create("제목 3", "내용 3");
+        int id =postService.create("제목 3", "내용 3", 1);
 
         Post post = postService.findById(id);
 
@@ -52,7 +52,7 @@ public class PostServiceTest {
     @Test
     @DisplayName("게시물 생성 V2")
     void t4() {
-        postService.create("제목 3", "내용 3");
+        postService.create("제목 3", "내용 3", 1);
         int id = postService.getLastInsertId();
 
         Post post = postService.findById(id);
@@ -143,7 +143,7 @@ public class PostServiceTest {
     @Test
     @DisplayName("정렬된 게시물 조회 - 생성일 내림차순")
     void t12() {
-        postService.create("제목 3", "내용 3");
+        postService.create("제목 3", "내용 3", 1);
         List<Post> posts = postService.findAll("createDate", "desc");
         assertThat(posts).hasSize(3);
         assertThat(posts.get(0).getTitle()).isEqualTo("제목 3");
@@ -168,8 +168,8 @@ public class PostServiceTest {
     @DisplayName("다중 게시물 삭제")
     void t14() {
         // 추가 게시물 생성
-        int id3 = postService.create("제목 3", "내용 3");
-        int id4 = postService.create("제목 4", "내용 4");
+        int id3 = postService.create("제목 3", "내용 3", 1);
+        int id4 = postService.create("제목 4", "내용 4", 1);
 
         // 다중 삭제
         int deletedCount = postService.deleteByIds(Arrays.asList(id3, id4));

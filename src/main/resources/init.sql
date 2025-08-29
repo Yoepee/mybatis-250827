@@ -5,11 +5,11 @@
 DROP TABLE IF EXISTS post;
 CREATE TABLE post(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    createDate DATETIME NOT NULL,
-    modifyDate DATETIME NOT NULL,
-    memberId INT UNSIGNED NOT NULL,
     title CHAR(100) NOT NULL,
     content TEXT NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    createDate DATETIME NOT NULL,
+    modifyDate DATETIME NOT NULL,
     PRIMARY KEY(id)
 );
 
