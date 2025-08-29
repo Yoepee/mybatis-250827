@@ -15,6 +15,8 @@ public class Post {
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
 
+    private String authorName;
+
     public Post(String title, String content, int memberId) {
         this.title = title;
         this.content = content;

@@ -22,4 +22,6 @@ public interface PostRepository {
     List<Post> findByType(@Param("type") String type, @Param("keyword") String keyword);
 
     int deleteByIds(List<Integer> ids);
+
+    Post findByIdWithAuthorName(int id);
 }

@@ -179,4 +179,17 @@ public class PostServiceTest {
         List<Post> posts = postService.findAll();
         assertThat(posts).hasSize(2); // 기존 2개만 남음
     }
+
+    // 테스트 코드
+    @Test
+    @DisplayName("작성자 이름 포함 조회 테스트")
+    void t15() {
+        // given
+        Post post = postService.findByIdWithAuthorName(1);
+
+        // then
+        assertThat(post.getTitle()).isEqualTo("제목 1");
+        assertThat(post.getAuthorName()).isEqualTo("유저1"); // 간단!
+        assertThat(post.getMemberId()).isEqualTo(1);
+    }
 }

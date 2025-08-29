@@ -51,6 +51,16 @@
         SELECT * FROM post WHERE id = #{id}
     </select>
 
+    <select id="findByIdWithAuthorName" resultType="Post">
+        SELECT
+            p.*,
+            m.name as authorName
+        FROM post p
+        LEFT JOIN member m
+        ON p.memberId = m.id
+        WHERE p.id = #{id};
+    </select>
+
     <!-- 게시물 생성 (ID 반환) -->
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO post(createDate, modifyDate, title, content, memberId)
