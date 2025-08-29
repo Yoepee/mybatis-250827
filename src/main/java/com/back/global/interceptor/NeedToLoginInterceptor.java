@@ -8,12 +8,19 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @Slf4j
-public class BeforeActionInterceptor implements HandlerInterceptor {
+public class NeedToLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.debug("BeforeActionInterceptor::preHandle 실행됨");
-        log.info("info");
-        log.warn("warn");
+        log.debug("NeedToLoginInterceptor::preHandle 실행됨");
+
+        boolean isLogined = false;
+        if (!isLogined) {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
+            response.getWriter().append("로그인 후 이용하세요.");
+            return false;
+        }
+
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }
