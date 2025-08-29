@@ -52,6 +52,7 @@ public class MemberService {
     }
 
     public int deleteByIds(List<Integer> ids) {
+        if (ids.isEmpty()) return 0;
         return memberRepository.deleteByIds(ids);
     }
 }

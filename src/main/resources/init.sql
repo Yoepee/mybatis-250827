@@ -7,18 +7,19 @@ CREATE TABLE post(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     createDate DATETIME NOT NULL,
     modifyDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
     title CHAR(100) NOT NULL,
     content TEXT NOT NULL,
     PRIMARY KEY(id)
 );
 
-INSERT INTO post(createDate, modifyDate, title, content)
+INSERT INTO post(createDate, modifyDate, title, content, memberId)
 VALUES
-    (NOW(), NOW(), '제목 1', '내용 1');
+    (NOW(), NOW(), '제목 1', '내용 1', 1);
 
-INSERT INTO post(createDate, modifyDate, title, content)
+INSERT INTO post(createDate, modifyDate, title, content, memberId)
 VALUES
-    (NOW(), NOW(), '제목 2', '내용 2');
+    (NOW(), NOW(), '제목 2', '내용 2', 2);
 
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`(
