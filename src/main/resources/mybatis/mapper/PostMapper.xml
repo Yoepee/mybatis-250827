@@ -100,20 +100,30 @@
 
     <!-- 게시물 검색 -->
     <select id="findByType" resultType="Post">
-        SELECT * FROM post
+        SELECT
+        p.*,
+        m.name as authorName
+        FROM post p
+        LEFT JOIN member m
+        ON p.memberId = m.id
         <where>
             <choose>
                 <when test="type.equals('title')">
-                    title LiKE CONCAT('%', #{keyword}, '%')
+                    p.title LiKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <when test="type.equals('content')">
-                    content LiKE CONCAT('%', #{keyword}, '%')
+                    p.content LiKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="type.equals('author')">
+                    m.name LiKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <otherwise>
                     (
-                    title LiKE CONCAT('%', #{keyword}, '%')
+                    p.title LiKE CONCAT('%', #{keyword}, '%')
                     OR
-                    content LiKE CONCAT('%', #{keyword}, '%')
+                    p.content LiKE CONCAT('%', #{keyword}, '%')
+                    OR
+                    m.name LiKE CONCAT('%', #{keyword}, '%')
                     )
                 </otherwise>
             </choose>
