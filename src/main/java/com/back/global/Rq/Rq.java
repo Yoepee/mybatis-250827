@@ -63,7 +63,12 @@ public class Rq {
         String name = getLoginedMemberName();
         String email = getLoginedMemberEmail();
 
-        return new Member(id, usename, name, email);
+        return Member.builder()
+                .id(id)
+                .username(usename)
+                .name(name)
+                .email(email)
+                .build();
     }
 
     public void setLoginDone(Member member) {

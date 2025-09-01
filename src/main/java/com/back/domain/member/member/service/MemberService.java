@@ -26,7 +26,12 @@ public class MemberService {
 
     public int create(String username, String password, String name, String email) {
         if (findByUsername(username) != null) return -1;
-        Member member = new Member(username, password, name, email);
+        Member member = Member.builder()
+                .username(username)
+                .password(password)
+                .name(name)
+                .email(email)
+                .build();
         memberRepository.create(member);
         return member.getId();
     }
