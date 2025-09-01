@@ -25,5 +25,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         registration = registry.addInterceptor(NeedToLoginInterceptor);
         registration.addPathPatterns("/posts/write");
+        registration.addPathPatterns("/members/me");
     }
 }

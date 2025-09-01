@@ -1,6 +1,5 @@
 package com.back.global.interceptor;
 
-import com.back.global.Rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Slf4j
 @RequiredArgsConstructor
 public class BeforeActionInterceptor implements HandlerInterceptor {
-    private final Rq rq;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("this"+this);
@@ -20,10 +18,6 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
         log.info("info");
         log.warn("warn");
 
-        rq.increaseCount();
-        log.debug("""
-                rq: %s, rq.count: %s
-                """.formatted(rq, rq.getCount()));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

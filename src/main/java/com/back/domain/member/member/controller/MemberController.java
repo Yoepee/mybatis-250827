@@ -25,6 +25,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
+    @ResponseBody
     public String login(@Param("username") String username, @Param("password")String password, HttpSession session) {
         Member member = memberService.findByUsername(username);
         
@@ -37,8 +38,7 @@ public class MemberController {
             return "비밀번호가 일치하지 않습니다.";
         }
 
-        rq.setName(member.getName());
-        session.setAttribute("loginedMemberId", member.getId());
+        rq.setLoginDone(member);
         System.out.println(session.getAttribute("loginedMemberId"));
         return "로그인 처리";
     }
@@ -46,9 +46,14 @@ public class MemberController {
     @GetMapping("/logout")
     @ResponseBody
     public String logout(HttpSession session) {
-        rq.setName("로그아웃됨");
-        session.removeAttribute("loginedMemberId");
+        rq.setLogoutDone();
 
         return "로그아웃 처리";
+    }
+
+    @GetMapping("/me")
+    @ResponseBody
+    public Member me() {
+        return rq.getLoginedMember();
     }
 }

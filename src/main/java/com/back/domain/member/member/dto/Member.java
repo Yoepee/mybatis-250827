@@ -16,9 +16,18 @@ public class Member {
     private String name;
     private String email;
 
+    public Member() {}
+
     public Member(String username, String password, String name, String email) {
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+
+    public Member(int id, String username, String name, String email) {
+        this.id = id;
+        this.username = username;
         this.name = name;
         this.email = email;
     }
