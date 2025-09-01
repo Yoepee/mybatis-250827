@@ -22,4 +22,8 @@ public class Member {
         this.name = name;
         this.email = email;
     }
+
+    public boolean matchPassword(String password) {
+        return this.password.substring("{noop}".length()).equals(password);
+    }
 }
