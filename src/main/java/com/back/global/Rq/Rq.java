@@ -38,9 +38,7 @@ public class Rq {
     public int getLoginedMemberId(){
         Integer loginedMemberId = (Integer) session.getAttribute("loginedMemberId");
 
-        if (loginedMemberId == null){
-            return 0;
-        }
+        if (loginedMemberId == null) return 0;
 
         return loginedMemberId;
     }
